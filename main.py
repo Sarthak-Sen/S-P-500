@@ -54,16 +54,21 @@ st.markdown(file_download(df_selected_sector), unsafe_allow_html=True)
 user_symbol = st.sidebar.text_input('Enter Company Sticker for Graph Plot')
 user_symbol = user_symbol.upper()
 
-data = yf.download(
-    tickers=list(df_selected_sector[:].Symbol),
-    period="ytd",
-    interval="1d",
-    group_by='ticker',
-    auto_adjust=True,
-    prepost=True,
-    threads=True,
-    proxy=None
-)
+if selected_sector:
+    try:
+        data = yf.download(
+            tickers=list(df_selected_sector[:].Symbol),
+            period="ytd",
+            interval="1d",
+            group_by='ticker',
+            auto_adjust=True,
+            prepost=True,
+            threads=True,
+            proxy=None
+        )
+    except:
+        st.markdown("""**No Sector Selected**""")
+
 
 
 def price_plot(symbol):
